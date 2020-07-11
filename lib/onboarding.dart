@@ -1,112 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'mainscreen.dart';
-import 'styles.dart';
+import 'package:hackathon_trud/login.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  _OnboardingScreenState createState() => _OnboardingScreenState();
+class OnBoardingPage extends StatefulWidget {
+  @override
+  _OnBoardingPageState createState() => _OnBoardingPageState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  final int _num_pages = 3;
+class _OnBoardingPageState extends State<OnBoardingPage> {
+  final introKey = GlobalKey<IntroductionScreenState>();
 
-  final PageController _pageController = PageController(initialPage: 0);
-  int _current_page = 0;
+  void _onIntroEnd(context) {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => LoginScreen()),
+    );
+  }
+
+  Widget _buildImage(String assetName) {
+    return Align(
+      child: SvgPicture.asset('assets/images/$assetName.svg', width: 350.0),
+      alignment: Alignment.bottomCenter,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-//      appBar: AppBar(
-//        title: Text('widget.title'),
-//      ),
-        body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [0,1],
-                  colors: [
-                    Color(0xFF3594DD),
-                    Color(0xFF5B16D0),
-                  ]
-              )
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: PageView(
-                    physics: ClampingScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: (int page){
-                      setState(() {
-                        _current_page = page;
-                      });
-                    },
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          children: [
-                            Center(
-                                child: SvgPicture.asset(
-                                  'assets/images/undraw_aircraft_fbvl.svg',
-                                  height: 200.0,
-                                )
-                            ),
-                            SizedBox(height: 30.0,),
-                            Image.asset('assets/images/logo_dark.png'),
-                            SizedBox(height: 30.0,),
-                            Text("Решение \"всё в одном\" для успешной релокации в Россию. Мы поможем вам осуществить переезд, освоиться и легально устроиться на работу.", style: kSubtitleStyle,)
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Column(
-                  children: [
-                    RaisedButton(
-                      color: Colors.black,
-                      onPressed: (){},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset('assets/images/salamport.png', width: 30, height: 30,),
-                          Text("SalamPort ID", style: TextStyle(color: Colors.white)),
-                        ],
-                      ),
-                    ),
-                    RaisedButton(
-                      color: Colors.white,
-                      onPressed: (){},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset('assets/images/sber.png', width: 30, height: 30,),
-                          Text("Сбербанк ID", style: TextStyle(color: Colors.black),),
-                        ],
-                      ),
-                        ),
-                    RaisedButton(
-                      color: Colors.white,
-                      onPressed: (){ Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctxt) => MainScreen()));},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.phone_android, color: Colors.black54,),
-                          Text("Регистрация по номеру телефона", style: TextStyle(color: Colors.black)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        )
+    const bodyStyle = TextStyle(fontSize: 19.0);
+    const pageDecoration = const PageDecoration(
+      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+      bodyTextStyle: bodyStyle,
+      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      pageColor: Colors.white,
+      imagePadding: EdgeInsets.zero,
+    );
+
+    return IntroductionScreen(
+      key: introKey,
+      pages: [
+        PageViewModel(
+          title: "Поможем с релокацией в Россию",
+          body:
+          "Мы проконсультируем по вопросам покупки билетов, релокации и легализации в России.",
+          image: _buildImage('undraw_aircraft_fbvl'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Поможем с заселением",
+          body:
+          "Мы подберём вам жильё по средствам в соответствии с вашими требованиями.",
+          image: _buildImage('undraw_quite_town_mg2q'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Трудоустройство для рабочих",
+          body:
+          "В приложении есть список рабочих заданий. Вы можете принять задание и получить деньги на карту в тот же день.",
+          image: _buildImage('undraw_Directions_re_kjxs'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Поможем с вопросами легализации",
+          body: "Мы расскажем, какие документы вам потребуются, чтобы легально устроиться на работу в России.",
+          image: _buildImage('undraw_user_flow_vr6w'),
+          decoration: pageDecoration,
+        ),
+      ],
+      onDone: () => _onIntroEnd(context),
+      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      showSkipButton: true,
+      skipFlex: 0,
+      nextFlex: 0,
+      skip: const Text('Пропустить'),
+      next: const Icon(Icons.arrow_forward),
+      done: const Text('Далее', style: TextStyle(fontWeight: FontWeight.w600)),
+      dotsDecorator: const DotsDecorator(
+        size: Size(10.0, 10.0),
+        color: Color(0xFFBDBDBD),
+        activeSize: Size(22.0, 10.0),
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+      ),
     );
   }
 }

@@ -57,6 +57,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/undraw_aircraft_fbvl.svg
+    - assets/images/undraw_Directions_re_kjxs.svg
+    - assets/images/undraw_quite_town_mg2q.svg
+    - assets/images/undraw_user_flow_vr6w.svg
     - assets/images/sber.png
     - assets/images/salamport.png
     - assets/images/gosu.webp
