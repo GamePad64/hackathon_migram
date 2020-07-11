@@ -6,6 +6,7 @@ import 'relocation.dart';
 import 'orders.dart';
 import 'services.dart';
 import 'styles.dart';
+import 'chat.dart';
 
 class EmptyAppBar  extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -34,7 +35,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         top: false,
         child: IndexedStack(
           index: _currentIndex,
-          children: [RelocationWidget(), OrdersWidget(), ServicesWidget(), Container()],
+          children: [RelocationWidget(), OrdersWidget(), ServicesWidget(), MyHomePage()],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
