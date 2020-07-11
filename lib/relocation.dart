@@ -13,7 +13,7 @@ class RelocationWidget extends StatefulWidget {
 class _RelocationWidgetState extends State<RelocationWidget> with TickerProviderStateMixin {
   TabController _tabController;
 
-  List<bool> entryChecks = [false, false];
+  List<bool> entryChecks = [true, false];
   final List<String> entries = <String>['Разрешение на работу / Патент', 'Созвон с агентством по найму'];
   List<String> entry_desc = ['Направьтесь в консульство России в Ташкенте\nПолучите разрешение на работу.\n\nАдрес консульства: Ташкент, ул. Нукус, 83.\nтел. (8-10-998-71) 120-35-04 (круглосуточно)', ''];
 
