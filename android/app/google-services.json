@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:982326688013:android:cd4bc228a75e9c53535844",
+        "mobilesdk_app_id": "1:982326688013:android:8db904aeb0e5609e535844",
         "android_client_info": {
           "package_name": "com.example.hackathon_trud"
         }
@@ -30,6 +30,13 @@
             {
               "client_id": "982326688013-bjp4ndrdq91u2d91t9fem2tgv812m0np.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "982326688013-c3tgn39numoe3h0leem3sob31mgiq6q0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hackathonTrud"
+              }
             }
           ]
         }
