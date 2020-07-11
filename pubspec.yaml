@@ -65,6 +65,11 @@ flutter:
     - assets/images/gosu.webp
     - assets/images/yatrans.webp
     - assets/images/megafon.webp
+    - assets/images/fns.webp
+    - assets/images/mfc.webp
+    - assets/images/pfr.webp
+    - assets/images/sber.webp
+    - assets/images/eurasia.webp
     - assets/images/logo.png
     - assets/images/logo_dark.png
 

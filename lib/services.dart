@@ -1,5 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:core';
+
+
+extension IndexedIterable<E> on Iterable<E> {
+  Iterable<T> mapIndexed<T>(T f(E e, int i)) {
+    var i = 0;
+    return this.map((e) => f(e, i++));
+  }
+}
 
 
 class ServicesWidget extends StatefulWidget {
@@ -10,6 +20,10 @@ class ServicesWidget extends StatefulWidget {
 }
 
 class _ServicesWidgetState extends State<ServicesWidget> with TickerProviderStateMixin {
+  final List<String> entry_text = <String>['Госуслуги', 'Переводчик', 'Мой мобильный', 'Мой банк', 'Налоговая служба', 'Пенсионный фонд', 'Мои Документы', 'Трудовая Евразия'];
+  List<String> entry_img = ['gosu', 'yatrans', 'megafon', 'sber', 'fns', 'pfr', 'mfc', 'eurasia'];
+  List<String> entry_link = ['https://gosuslugi.ru', 'https://translate.yandex.ru/?lang=uz-ru', 'https://megafon.ru', 'https://online.sberbank.ru', 'https://nalog.ru', 'http://www.pfrf.ru/', 'https://md.mos.ru/', 'https://vk.com/eurasialabor'];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,59 +33,32 @@ class _ServicesWidgetState extends State<ServicesWidget> with TickerProviderStat
           child: Container(),
         ),
         Expanded(
-            child: GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(20),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 3,
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/gosu.webp',
-                        height: 64.0,
-                      ),
-                      Text("Госуслуги", style: TextStyle(fontWeight: FontWeight.bold),)
-                    ],
+          child: GridView.count(
+            primary: false,
+            padding: const EdgeInsets.all(20),
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            crossAxisCount: 3,
+            children:
+              entry_text.mapIndexed((element, index) {
+                return Center(
+                  child: GestureDetector(
+                    onTap: () async {
+                      await launch(entry_link[index]);
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/images/${entry_img[index]}.webp',
+                          height: 64.0,
+                        ),
+                        Text(element, style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,)
+                      ],
+                    ),
                   ),
-                ),
-                Center(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/yatrans.webp',
-                        height: 64.0,
-                      ),
-                      Text("Переводчик", style: TextStyle(fontWeight: FontWeight.bold),)
-                    ],
-                  ),
-                ),
-                Center(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/megafon.webp',
-                        height: 64.0,
-                      ),
-                      Text("Мой мобильный", style: TextStyle(fontWeight: FontWeight.bold),)
-                    ],
-                  ),
-                ),
-                Center(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/sber.png',
-                        height: 64.0,
-                      ),
-                      Text("Мой банк", style: TextStyle(fontWeight: FontWeight.bold),)
-                    ],
-                  ),
-                ),
-              ],
-            )
+                );
+              }).toList()
+          )
         )
       ],
     );
